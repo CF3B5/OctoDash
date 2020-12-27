@@ -94,8 +94,8 @@ export class FilamentComponent implements OnInit {
       this.getSpools();
     } else if (page === 1) {
       this.isHeating = false;
-      this.automaticHeatingStartSeconds = 6;
-      this.automaticHeatingStartTimer();
+      //this.automaticHeatingStartSeconds = 60;
+      //this.automaticHeatingStartTimer();
     } else if (page === 2) {
       if (this.getFeedLength() === 0) {
         this.setPage(3);
@@ -195,7 +195,7 @@ export class FilamentComponent implements OnInit {
 
   public setSpool(spool: FilamentSpool): void {
     this.selectedSpool = spool;
-    this.hotendTarget = this.hotendTarget + spool.temp_offset;
+    this.hotendTarget = this.configService.getDefaultHotendTemperature() + spool.temp_offset;
     this.increasePage();
   }
 
@@ -287,7 +287,7 @@ export class FilamentComponent implements OnInit {
       this.hotendTarget = 999;
     }
     if (!this.isHeating) {
-      this.automaticHeatingStartSeconds = 5;
+      this.automaticHeatingStartSeconds = 60;
     } else {
       this.setNozzleTemperature();
     }

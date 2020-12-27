@@ -36,14 +36,14 @@
   </div>
   <span class="job-info__filename">{{ job.filename }}</span>
   <br />
-  <span class="job-info__filament" *ngIf="hasProperty(job, 'filamentAmount')">{{ job.filamentAmount }}g Filament</span>
+  <span class="job-info__filament" *ngIf="hasProperty(job, 'filamentAmount')">需要 {{ job.filamentAmount }}g 材料</span>
   <br />
   <span class="job-info__time">
     <span *ngIf="hasProperty(job, 'timeLeft')">
-      <span class="job-info__time-left">{{ job.timeLeft.value }}</span
-      >{{ job.timeLeft.unit }} left,
+      <span class="job-info__time-left">还剩 {{ job.timeLeft.value }}</span
+      >{{ job.timeLeft.unit }} /
     </span>
-    elapsed: {{ job.timePrinted.value }}{{ job.timePrinted.unit }}
+    {{ job.timePrinted.value }}{{ job.timePrinted.unit }}
   </span>
 </div>
 <div class="job-info__file-loaded" *ngIf="job && !isPrinting() && isFileLoaded()">

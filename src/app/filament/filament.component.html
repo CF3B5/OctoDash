@@ -2,7 +2,7 @@
   <tr>
     <td class="top-bar__back" (click)="decreasePage()" matRipple [matRippleUnbounded]="false">
       <img src="assets/back.svg" class="top-bar__back-icon" />
-      back
+      返回
     </td>
     <td class="top-bar__center">
       <img src="assets/filament.svg" class="top-bar__center-icon" *ngIf="page === 0" />
@@ -11,14 +11,14 @@
       </div>
     </td>
     <td class="top-bar__next" (click)="increasePage()" matRipple [matRippleUnbounded]="false">
-      skip
+      跳过
       <img src="assets/next.svg" class="top-bar__next-icon" />
     </td>
   </tr>
 </table>
 <div class="filament">
   <div *ngIf="page === 0">
-    <span class="filament-heading">select your new filament</span>
+    <span class="filament-heading">选择一个耗材</span>
     <table class="filament-filaments" *ngIf="filamentSpools && !isLoadingSpools">
       <tr *ngFor="let spool of filamentSpools.spools" (click)="setSpool(spool)">
         <td class="filament-filaments__type">
@@ -30,7 +30,7 @@
           {{ spool.displayName }}
         </td>
         <td class="filament-filaments__weight-left">
-          {{ getSpoolWeightLeft(spool.weight, spool.used) }}<span style="font-size: 60%">g left</span>
+          还剩{{ getSpoolWeightLeft(spool.weight, spool.used) }}<span style="font-size: 60%">g</span>
         </td>
       </tr>
     </table>
@@ -39,7 +39,7 @@
     <div class="scroll__thumb-inactive" *ngIf="filamentSpools"></div>
   </div>
   <div *ngIf="page === 1">
-    <span class="filament-heading">heating the nozzle</span>
+    <span class="filament-heading">加热打印头</span>
     <div class="filament-heating__center">
       <div class="filament-heating__controller">
         <div class="filament-heating__controller-row">
@@ -97,18 +97,18 @@
       </div>
     </div>
     <div class="filament-heating__start-wrapper" *ngIf="!isHeating">
-      <span>
-        wait
-        <span>{{ automaticHeatingStartSeconds }}</span>
-        s or -
-      </span>
+<!--      <span>-->
+<!--        等待-->
+<!--        <span>{{ automaticHeatingStartSeconds }}</span>-->
+<!--        s or - -->
+<!--      </span>-->
       <a
         class="filament-heating__start-heating"
         matRipple
         [matRippleUnbounded]="false"
         (click)="setNozzleTemperature()"
       >
-        start
+        马上开始
       </a>
     </div>
   </div>

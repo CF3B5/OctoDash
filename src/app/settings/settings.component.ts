@@ -22,12 +22,12 @@ export class SettingsComponent implements OnInit {
   public fadeOutAnimation = false;
   public config: Config;
   public customActionsPosition = [
-    'Top Left',
-    'Top Right',
-    'Middle Left',
-    'Middle Right',
-    'Bottom Left',
-    'Bottom Right',
+    '按钮1',
+    '按钮2',
+    '按钮3',
+    '按钮4',
+    '按钮5',
+    '按钮6',
   ];
   private overwriteNoSave = false;
   private pages = [];
@@ -93,6 +93,12 @@ export class SettingsComponent implements OnInit {
     }
     this.configService.saveConfig(config);
     this.overwriteNoSave = true;
+    this.hideSettings();
+    this.electronService.ipcRenderer.send('reload');
+  }
+
+  public resetConfig(): void {
+    this.configService.resetConfig();
     this.hideSettings();
     this.electronService.ipcRenderer.send('reload');
   }

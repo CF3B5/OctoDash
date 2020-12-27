@@ -35,7 +35,13 @@ export class BottomBarComponent implements OnDestroy {
     };
     this.subscriptions.add(
       this.printerService.getObservable().subscribe((printerStatus: PrinterStatusAPI): void => {
-        this.printer.status = printerStatus.status;
+        if (printerStatus.status == 'printing') {
+          this.printer.status = '打印中';
+        }if (printerStatus.status == 'operational') {
+          this.printer.status = '待命中';
+        } else {
+          this.printer.status = printerStatus.status;
+        }
       }),
     );
   }

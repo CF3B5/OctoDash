@@ -94,6 +94,7 @@ export interface CustomAction {
   color: string;
   confirm: boolean;
   exit: boolean;
+  label: string;
 }
 
 interface FileSorting {

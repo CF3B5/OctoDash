@@ -25,6 +25,7 @@ import { ConfigSetupComponent } from './config/setup/setup.component';
 import { WelcomeComponent } from './config/setup/welcome/welcome.component';
 import { ControlComponent } from './control/control.component';
 import { FilamentComponent } from './filament/filament.component';
+import { FilamentControlComponent } from './filament-control/filament-control.component';
 import { FilesComponent } from './files/files.component';
 import { JobService } from './job.service';
 import { JobStatusComponent } from './job-status/job-status.component';
@@ -49,6 +50,7 @@ import { URLSafePipe } from './url.pipe';
     BottomBarComponent,
     ControlComponent,
     FilamentComponent,
+    FilamentControlComponent,
     FilesComponent,
     ConfigInvalidComponent,
     JobStatusComponent,

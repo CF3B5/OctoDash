@@ -8,21 +8,21 @@
       <tr>
         <td class="top-bar__back">
           <img src="assets/back.svg" class="top-bar__back-icon" />
-          back
+          返回
         </td>
       </tr>
     </table>
     <div class="print-control__action" (click)="cancel($event)">
       <img src="assets/cancel.svg" />
-      cancel
+      取消
     </div>
     <div class="print-control__action" (click)="pause($event)">
       <img src="assets/pause.svg" />
-      pause
+      暂停
     </div>
     <div class="print-control__action" (click)="adjust($event)">
       <img src="assets/adjust.svg" />
-      adjust
+      调整
     </div>
   </div>
   <div *ngIf="view === controlView.CANCEL" (click)="stopPropagation($event)">
@@ -38,19 +38,19 @@
       <tr>
         <td class="top-bar__back">
           <img src="assets/back.svg" class="top-bar__back-icon" />
-          back
+          返回
         </td>
       </tr>
     </table>
     <img src="assets/pause.svg" class="print-control__center-icon print-control__pause__icon" />
-    <span class="print-control__confirm">print paused</span>
+    <span class="print-control__confirm">打印暂停</span>
     <div class="print-control__pause__resume">
-      <div (click)="restart($event)">restart</div>
+      <div (click)="restart($event)">重启</div>
       <div (click)="resume($event)">
         <img src="assets/resume.svg" class="print-control__pause__resume-icon" />
-        resume
+        恢复
       </div>
-      <div (click)="changeFilament($event)">filament</div>
+      <div (click)="changeFilament($event)">调整材料</div>
     </div>
   </div>
   <div *ngIf="view === controlView.ADJUST" (click)="stopPropagation($event)">
@@ -58,7 +58,7 @@
       <tr>
         <td class="top-bar__back" (click)="backToControlScreen($event)" matRipple [matRippleUnbounded]="false">
           <img src="assets/back.svg" class="top-bar__back-icon" />
-          back
+          返回
         </td>
         <td class="top-bar__center"></td>
         <td class="top-bar__next"></td>
@@ -90,7 +90,7 @@
               -
             </div>
           </div>
-          <span class="print-control__adjust__name">Hotend</span>
+          <span class="print-control__adjust__name">打印头</span>
         </td>
         <td class="print-control__adjust__change-parameter">
           <div class="print-control__adjust__controller">
@@ -115,7 +115,7 @@
               -
             </div>
           </div>
-          <span class="print-control__adjust__name">Heatbed</span>
+          <span class="print-control__adjust__name">热床</span>
         </td>
         <td class="print-control__adjust__change-parameter">
           <div class="print-control__adjust__controller">
@@ -140,7 +140,7 @@
               -
             </div>
           </div>
-          <span class="print-control__adjust__name">Fan Speed</span>
+          <span class="print-control__adjust__name">风扇转速</span>
         </td>
         <td class="print-control__adjust__change-parameter">
           <div class="print-control__adjust__controller">
@@ -165,7 +165,7 @@
               -
             </div>
           </div>
-          <span class="print-control__adjust__name">Feedrate</span>
+          <span class="print-control__adjust__name">挤出量</span>
         </td>
       </tr>
     </table>
@@ -180,7 +180,7 @@
         matRipple
         [matRippleUnbounded]="false"
       >
-        save
+        保存
       </div>
     </div>
   </div>
@@ -189,14 +189,14 @@
       <tr>
         <td class="top-bar__back" (click)="adjust($event)" matRipple [matRippleUnbounded]="false">
           <img src="assets/back.svg" class="top-bar__back-icon" />
-          back
+          返回
         </td>
         <td class="top-bar__center"></td>
         <td class="top-bar__next"></td>
       </tr>
     </table>
     <img src="assets/height.svg" class="print-control__center-icon-small" />
-    <span class="print-control__confirm">Babystep Z</span>
+    <span class="print-control__confirm">Z轴微调</span>
     <div>
       <div class="print-control__adjust-babystep__change">
         <span

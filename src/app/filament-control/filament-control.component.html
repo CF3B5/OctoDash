@@ -1,0 +1,49 @@
+<table class="top-bar">
+  <tr>
+    <td class="top-bar__back" routerLink="/main-screen">
+      <span matRipple [matRippleUnbounded]="true" [matRippleCentered]="true">
+        <img src="assets/back.svg" class="top-bar__back-icon" />
+        返回
+      </span>
+    </td>
+    <td class="top-bar__center">
+      <img src="assets/filament.svg" class="top-bar__center-icon" />
+    </td>
+    <td class="top-bar__next" routerLink="/filament"  >
+      更换耗材
+    </td>
+  </tr>
+</table>
+<div style="margin: 0 10px;">
+  <app-printer-status></app-printer-status>
+</div>
+
+
+<div class="control">
+  <div class="control__custom">
+    <div
+      class="control__custom-action"
+      *ngFor="let customAction of customActions"
+      [style.border-color]="customAction.color"
+      (click)="doAction(customAction.command, customAction.exit, customAction.confirm)"
+      matRipple
+      [matRippleUnbounded]="false"
+    >
+      <fa-icon
+        [icon]="['fas', customAction.icon]"
+        class="control__custom-action-icon"
+        [styles]="{ color: customAction.color }"
+      ></fa-icon>
+    </div>
+  </div>
+</div>
+
+<div class="confirm__wrapper" *ngIf="actionToConfirm">
+  <div class="confirm">
+    <h1>Are you sure?</h1>
+    <p class="confirm__sub-heading">Do you want to execute the following GCode?</p>
+    <p class="confirm__gcode">{{ actionToConfirm.command }}</p>
+    <img class="confirm__icon" src="assets/confirm.svg" (click)="doActionConfirm()" />
+    <img class="confirm__icon" src="assets/cancel.svg" (click)="doActionNoConfirm()" />
+  </div>
+</div>

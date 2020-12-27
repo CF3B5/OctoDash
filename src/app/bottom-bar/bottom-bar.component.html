@@ -1,6 +1,16 @@
 <table class="bottom-bar">
   <tr>
     <td class="bottom-bar__printer-name">{{ printer.name }}</td>
+    <td class="bottom-bar__printer-name">
+      <div>
+        <fa-icon icon="fas lightbulb" class="control__custom-action-icon"
+        ></fa-icon>
+      </div>
+      <div>
+        <fa-icon icon="fas lightbulb" class="control__custom-action-icon"
+        ></fa-icon>
+      </div>
+    </td>
     <td class="bottom-bar__enclosure-temperature" *ngIf="enclosureTemperature">
       <img src="assets/thermometer.svg" class="bottom-bar__enclosure-temperature-icon" />
       {{ enclosureTemperature.temperature }}{{ enclosureTemperature.unit }}

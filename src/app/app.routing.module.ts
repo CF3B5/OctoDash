@@ -11,6 +11,7 @@ import { MainScreenComponent } from './main-screen/main-screen.component';
 import { MainScreenNoTouchComponent } from './main-screen/no-touch/main-screen-no-touch.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StandbyComponent } from './standby/standby.component';
+import { FilamentControlComponent } from "./filament-control/filament-control.component";
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'filament',
     component: FilamentComponent,
+  },
+  {
+    path: 'filament-control',
+    component: FilamentControlComponent,
   },
   {
     path: 'files',

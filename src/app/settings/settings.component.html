@@ -3,22 +3,22 @@
     <div class="settings-container">
       <img src="assets/error.svg" class="settings__close" (click)="hideSettings()" />
       <div class="settings__content" #settingsMain>
-        <span class="settings__heading">settings</span>
+        <span class="settings__heading">设置</span>
         <ul class="settings__list">
           <li (click)="changePage(1, 0, 'forward')">
-            general
+            打印机设置
             <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
           </li>
           <li (click)="changePage(2, 0, 'forward')">
-            octodash
+            OctoDash设置
             <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
           </li>
           <li (click)="changePage(3, 0, 'forward')">
-            plugins
+            插件设置
             <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
           </li>
           <li (click)="changePage(4, 0, 'forward')">
-            about
+            关于
             <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
           </li>
         </ul>
@@ -29,7 +29,10 @@
         >
           update available!
         </span>
-        <span class="settings__save" (click)="updateConfig()">save</span>
+        <div style="display: flex;justify-content: center">
+          <div class="settings__save" (click)="updateConfig()">保存</div>
+        </div>
+
         <span class="settings__made">
           made with
           <fa-icon [icon]="['fas', 'heart']" class="settings__made-heart"></fa-icon>
@@ -40,10 +43,10 @@
       <div class="settings__content settings__content-inactive" #settingsGeneral>
         <span class="settings__heading" (click)="changePage(0, 1, 'backward')">
           <fa-icon [icon]="['fas', 'chevron-left']" class="settings__heading-back"></fa-icon>
-          general
+          打印机设置
         </span>
         <div class="settings__scroll">
-          <span class="settings__heading-2">OctoPrint Connection</span>
+          <span class="settings__heading-2">连接OctoPrint</span>
           <form class="settings__form">
             <label for="octoprintURLName" class="settings__input-label">Octoprint URL</label>
             <span class="settings__input-prefix">http://</span>
@@ -67,9 +70,9 @@
             />
             <br />
           </form>
-          <span class="settings__heading-2">Printer</span>
+          <span class="settings__heading-2">打印机</span>
           <form class="settings__form">
-            <label for="printerName" class="settings__input-label">Name</label>
+            <label for="printerName" class="settings__input-label">名字</label>
             <input
               type="text"
               id="printerName"
@@ -113,12 +116,12 @@
                 </td>
               </tr>
               <tr>
-                <td colspan="2" class="settings__sub-heading">Default Temperatures & Fan Speed</td>
+                <td colspan="2" class="settings__sub-heading">默认温度和风扇转速</td>
               </tr>
               <tr>
                 <td style="width: 25.6vw; display: block">
                   <label for="defaultHotendTemperature" class="settings__input-label">
-                    Hotend
+                    打印头
                     <span>(°C)</span>
                   </label>
                   <input
@@ -133,7 +136,7 @@
                 </td>
                 <td>
                   <label for="defaultHeatbedTemperature" class="settings__input-label">
-                    Heatbed
+                    热床
                     <span>(°C)</span>
                   </label>
                   <input
@@ -150,7 +153,7 @@
               <tr>
                 <td style="width: 25.6vw; display: block">
                   <label for="defaultFanSpeed" class="settings__input-label">
-                    Fan Speed
+                    风扇转速
                     <span>(%)</span>
                   </label>
                   <input
@@ -166,7 +169,7 @@
               </tr>
             </table>
           </form>
-          <span class="settings__heading-2">Filament</span>
+          <span class="settings__heading-2">耗材</span>
           <form class="settings__form">
             <table>
               <tr>
@@ -294,10 +297,10 @@
       <div class="settings__content settings__content-inactive" #settingsOctoDash>
         <span class="settings__heading" (click)="changePage(0, 2, 'backward')">
           <fa-icon [icon]="['fas', 'chevron-left']" class="settings__heading-back"></fa-icon>
-          octodash
+          OctoDash设置
         </span>
         <div class="settings__scroll">
-          <span class="settings__heading-2">General</span>
+          <span class="settings__heading-2">系统</span>
           <div
             class="settings__checkbox-container"
             (click)="config.octodash.turnScreenOffWhileSleeping = !config.octodash.turnScreenOffWhileSleeping"
@@ -305,7 +308,7 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.octodash.turnScreenOffWhileSleeping"></span>
             </span>
-            <span class="settings__checkbox-descriptor">Turn screen off while sleeping</span>
+            <span class="settings__checkbox-descriptor">没有任务时关闭屏幕</span>
           </div>
           <br />
           <div
@@ -322,7 +325,7 @@
                 *ngIf="config.octodash.turnOnPrinterWhenExitingSleep"
               ></span>
             </span>
-            <span class="settings__checkbox-descriptor">Turn on printer when exiting sleep</span>
+            <span class="settings__checkbox-descriptor">退出休眠时唤醒打印机</span>
           </div>
           <br />
           <div
@@ -332,7 +335,7 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.octodash.preferPreviewWhilePrinting"></span>
             </span>
-            <span class="settings__checkbox-descriptor">Preview by default while printing</span>
+            <span class="settings__checkbox-descriptor">打印时默认预览模型</span>
           </div>
           <br />
           <div
@@ -342,14 +345,19 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.octodash.previewProgressCircle"></span>
             </span>
-            <span class="settings__checkbox-descriptor">Always use circular progress bar</span>
+            <span class="settings__checkbox-descriptor">始终使用圆形进度条</span>
+          </div>
+
+          <div>
+            <div style="background-color: #d70909; border-radius: 4px;padding: 5px;font-size: 20px; text-align: center;margin: 10px;" (click)="resetConfig()">
+              重置配置文件 </div>
           </div>
           <br />
-          <span class="settings__heading-2">Files</span>
+          <span class="settings__heading-2">文件管理</span>
           <table class="settings__files">
             <tr>
               <td>
-                <span style="font-size: 2.9vw">sort by</span>
+                <span style="font-size: 2.9vw">排序</span>
                 <br />
                 <div class="settings__checkbox-container" (click)="config.octodash.fileSorting.attribute = 'name'">
                   <span class="settings__checkbox">
@@ -358,7 +366,7 @@
                       *ngIf="config.octodash.fileSorting.attribute === 'name'"
                     ></span>
                   </span>
-                  <span class="settings__checkbox-descriptor">Name</span>
+                  <span class="settings__checkbox-descriptor">文件名</span>
                 </div>
                 <br />
                 <div class="settings__checkbox-container" (click)="config.octodash.fileSorting.attribute = 'date'">
@@ -368,7 +376,7 @@
                       *ngIf="config.octodash.fileSorting.attribute === 'date'"
                     ></span>
                   </span>
-                  <span class="settings__checkbox-descriptor">Date</span>
+                  <span class="settings__checkbox-descriptor">日期</span>
                 </div>
                 <br />
                 <div class="settings__checkbox-container" (click)="config.octodash.fileSorting.attribute = 'size'">
@@ -378,34 +386,34 @@
                       *ngIf="config.octodash.fileSorting.attribute === 'size'"
                     ></span>
                   </span>
-                  <span class="settings__checkbox-descriptor">Size</span>
+                  <span class="settings__checkbox-descriptor">大小</span>
                 </div>
                 <br />
               </td>
               <td>
-                <span style="font-size: 2.9vw">order</span>
+                <span style="font-size: 2.9vw">顺序</span>
                 <br />
                 <div class="settings__checkbox-container" (click)="config.octodash.fileSorting.order = 'asc'">
                   <span class="settings__checkbox">
                     <span class="settings__checkbox-checked" *ngIf="config.octodash.fileSorting.order === 'asc'"></span>
                   </span>
-                  <span class="settings__checkbox-descriptor">Ascending</span>
+                  <span class="settings__checkbox-descriptor">正序</span>
                 </div>
                 <br />
                 <div class="settings__checkbox-container" (click)="config.octodash.fileSorting.order = 'dsc'">
                   <span class="settings__checkbox">
                     <span class="settings__checkbox-checked" *ngIf="config.octodash.fileSorting.order === 'dsc'"></span>
                   </span>
-                  <span class="settings__checkbox-descriptor">Descending</span>
+                  <span class="settings__checkbox-descriptor">倒序</span>
                 </div>
                 <br />
               </td>
             </tr>
           </table>
-          <span class="settings__heading-2">Custom Actions</span>
+          <span class="settings__heading-2">自定义指令</span>
           <div *ngFor="let number of [0, 1, 2, 3, 4, 5]">
             <span class="settings__heading-3">{{ customActionsPosition[number] }}</span>
-            <label for="action-command" class="settings__input-label">GCode / Action</label>
+            <label for="action-command" class="settings__input-label">GCode / 动作</label>
             <input
               type="string"
               id="action-command"
@@ -418,7 +426,7 @@
             <table>
               <tr>
                 <td>
-                  <label for="action-icon" class="settings__input-label">Icon</label>
+                  <label for="action-icon" class="settings__input-label">图标</label>
                   <input
                     type="text"
                     id="action-icon"
@@ -430,7 +438,7 @@
                   />
                 </td>
                 <td style="padding-left: 3vw">
-                  <label for="action-color" class="settings__input-label">Color</label>
+                  <label for="action-color" class="settings__input-label">颜色</label>
                   <input
                     type="text"
                     id="action-color"
@@ -463,7 +471,7 @@
                         *ngIf="config.octodash.customActions[number].confirm"
                       ></span>
                     </span>
-                    <span class="settings__checkbox-descriptor">Confirm</span>
+                    <span class="settings__checkbox-descriptor">需要确认</span>
                   </div>
                 </td>
 
@@ -478,11 +486,12 @@
                         *ngIf="config.octodash.customActions[number].exit"
                       ></span>
                     </span>
-                    <span class="settings__checkbox-descriptor">Return to Home</span>
+                    <span class="settings__checkbox-descriptor">返回主页</span>
                   </div>
                 </td>
               </tr>
             </table>
+
           </div>
           <br />
         </div>
@@ -490,10 +499,10 @@
       <div class="settings__content settings__content-inactive" #settingsPlugins>
         <span class="settings__heading" (click)="changePage(0, 3, 'backward')">
           <fa-icon [icon]="['fas', 'chevron-left']" class="settings__heading-back"></fa-icon>
-          plugins
+          插件设置
         </span>
         <div class="settings__scroll">
-          <span class="settings__heading-2">Display Layer Progress</span>
+          <span class="settings__heading-2">显示层进度</span>
           <div class="settings__checkbox-container" (click)="config.plugins.displayLayerProgress.enabled = true">
             <span class="settings__checkbox">
               <span
@@ -501,7 +510,7 @@
                 *ngIf="config.plugins.displayLayerProgress.enabled"
               ></span>
             </span>
-            <span class="settings__checkbox-descriptor">enabled</span>
+            <span class="settings__checkbox-descriptor">启用</span>
           </div>
           <span class="settings__heading-2">Enclosure</span>
           <div
@@ -511,7 +520,7 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.plugins.enclosure.enabled"></span>
             </span>
-            <span class="settings__checkbox-descriptor">enabled</span>
+            <span class="settings__checkbox-descriptor">启用</span>
           </div>
           <label for="enclosure-ambient-id" class="settings__input-label">
             Ambient Sensor
@@ -528,7 +537,7 @@
             [disabled]="!config.plugins.enclosure.enabled"
           />
 
-          <span class="settings__heading-2">Filament Manager</span>
+          <span class="settings__heading-2">耗材管理</span>
           <div
             class="settings__checkbox-container"
             (click)="config.plugins.filamentManager.enabled = !config.plugins.filamentManager.enabled"
@@ -536,7 +545,7 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.plugins.filamentManager.enabled"></span>
             </span>
-            <span class="settings__checkbox-descriptor">enabled</span>
+            <span class="settings__checkbox-descriptor">启用</span>
           </div>
           <span class="settings__heading-2">Preheat Button</span>
           <div
@@ -546,7 +555,7 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.plugins.preheatButton.enabled"></span>
             </span>
-            <span class="settings__checkbox-descriptor">enabled</span>
+            <span class="settings__checkbox-descriptor">启用</span>
           </div>
           <span class="settings__heading-2">Print Time Genius</span>
           <div
@@ -556,7 +565,7 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.plugins.printTimeGenius.enabled"></span>
             </span>
-            <span class="settings__checkbox-descriptor">enabled</span>
+            <span class="settings__checkbox-descriptor">启用</span>
           </div>
           <span class="settings__heading-2">PSU Control</span>
           <div
@@ -566,7 +575,7 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.plugins.psuControl.enabled"></span>
             </span>
-            <span class="settings__checkbox-descriptor">enabled</span>
+            <span class="settings__checkbox-descriptor">启用</span>
           </div>
           <span class="settings__heading-2">TPLink-SmartPlug</span>
           <div
@@ -576,7 +585,7 @@
             <span class="settings__checkbox">
               <span class="settings__checkbox-checked" *ngIf="config.plugins.tpLinkSmartPlug.enabled"></span>
             </span>
-            <span class="settings__checkbox-descriptor">enabled</span>
+            <span class="settings__checkbox-descriptor">启用</span>
           </div>
           <label for="smart-plug-ip" class="settings__input-label">SmartPlug IP</label>
           <input
@@ -594,7 +603,7 @@
       <div class="settings__content settings__content-inactive" #settingsCredits>
         <span class="settings__heading" (click)="changePage(0, 4, 'backward')">
           <fa-icon [icon]="['fas', 'chevron-left']" class="settings__heading-back"></fa-icon>
-          about
+          关于
         </span>
         <div class="settings__scroll">
           <img src="assets/icon/icon-main-title.svg" class="settings__about-icon" />

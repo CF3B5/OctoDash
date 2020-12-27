@@ -16,7 +16,7 @@
     <td class="top-bar__back" routerLink="/main-screen">
       <span matRipple [matRippleUnbounded]="true" [matRippleCentered]="true">
         <img src="assets/back.svg" class="top-bar__back-icon" />
-        back
+        返回
       </span>
     </td>
     <td class="top-bar__center">
@@ -105,20 +105,23 @@
     <span class="control__heading">Z</span>
   </div>
   <div class="control__custom">
-    <div
-      class="control__custom-action"
-      *ngFor="let customAction of customActions"
-      [style.border-color]="customAction.color"
-      (click)="doAction(customAction.command, customAction.exit, customAction.confirm)"
-      matRipple
-      [matRippleUnbounded]="false"
-    >
-      <fa-icon
-        [icon]="['fas', customAction.icon]"
-        class="control__custom-action-icon"
-        [styles]="{ color: customAction.color }"
-      ></fa-icon>
+    <div *ngFor="let customAction of customActions" style="float: left">
+      <div
+        class="control__custom-action"
+        [style.border-color]="customAction.color"
+        (click)="doAction(customAction.command, customAction.exit, customAction.confirm)"
+        matRipple
+        [matRippleUnbounded]="false"
+      >
+        <fa-icon
+          [icon]="['fas', customAction.icon]"
+          class="control__custom-action-icon"
+          [styles]="{ color: customAction.color }"
+        ></fa-icon>
+      </div>
+      <div style="font-size: 12px;text-align: center;overflow: hidden;margin: 2px 0">{{customAction.label}}</div>
     </div>
+
   </div>
   <table class="control__distance">
     <tr>
@@ -164,7 +167,7 @@
 <div class="confirm__wrapper" *ngIf="actionToConfirm">
   <div class="confirm">
     <h1>Are you sure?</h1>
-    <p class="confirm__sub-heading">Do you want to execute the following GCode?</p>
+    <p class="confirm__sub-heading">你确认执行这个GCode命令?</p>
     <p class="confirm__gcode">{{ actionToConfirm.command }}</p>
     <img class="confirm__icon" src="assets/confirm.svg" (click)="doActionConfirm()" />
     <img class="confirm__icon" src="assets/cancel.svg" (click)="doActionNoConfirm()" />

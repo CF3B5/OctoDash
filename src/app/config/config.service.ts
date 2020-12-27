@@ -108,6 +108,10 @@ export class ConfigService {
     }
   }
 
+  public resetConfig(): void {
+    this.store.clear();
+  }
+
   public splitOctoprintURL(octoprintURL: string): URLSplit {
     const host = octoprintURL.split(':')[1].replace('//', '');
     const port = parseInt(octoprintURL.split(':')[2].replace('/api/', ''), 10);
