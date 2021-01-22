@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { forkJoin, Subscription } from "rxjs";
+import { take } from "rxjs/operators";
 
-import { ConfigService } from '../config/config.service';
-import { Job, JobService, JobStatus } from '../job.service';
-import { DisplayLayerProgressAPI, LayerProgressService } from '../plugin-service/layer-progress.service';
-import { PrinterService, PrinterStatusAPI } from '../printer.service';
+import { ConfigService } from "../config/config.service";
+import { Job, JobService, JobStatus } from "../job.service";
+import { DisplayLayerProgressAPI, LayerProgressService } from "../plugin-service/layer-progress.service";
+import { PrinterService, PrinterStatusAPI } from "../printer.service";
 
 @Component({
-  selector: 'app-print-control',
-  templateUrl: './print-control.component.html',
-  styleUrls: ['./print-control.component.scss'],
+  selector: "app-print-control",
+  templateUrl: "./print-control.component.html",
+  styleUrls: ["./print-control.component.scss"]
 })
 export class PrintControlComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
@@ -32,7 +32,7 @@ export class PrintControlComponent implements OnInit, OnDestroy {
     private printerService: PrinterService,
     private displayLayerProgressService: LayerProgressService,
     private configService: ConfigService,
-    private router: Router,
+    private router: Router
   ) {
     this.temperatureHotend = 0;
     this.temperatureHeatbed = 0;
@@ -56,7 +56,7 @@ export class PrintControlComponent implements OnInit, OnDestroy {
           }
           this.showedPauseScreen = false;
         }
-      }),
+      })
     );
   }
 
@@ -149,7 +149,7 @@ export class PrintControlComponent implements OnInit, OnDestroy {
   }
 
   public changeFilament(event: MouseEvent): void {
-    this.router.navigate(['/filament']);
+    this.router.navigate(["/filament"]);
     this.stopPropagation(event);
   }
 
@@ -225,10 +225,21 @@ export class PrintControlComponent implements OnInit, OnDestroy {
     }
   }
 
-  public setAdjustParameters(event: MouseEvent): void {
+  public async setAdjustParameters(event: MouseEvent): Promise<void> {
     if (this.showControls) {
-      this.printerService.setTemperatureHotend(this.temperatureHotend);
-      this.printerService.setTemperatureHeatbed(this.temperatureHeatbed);
+      //console.log("hotend", this.temperatureHeatbed);
+      // let post1$ = this.http.get(`${this.apiUrl}/1`);
+      // let post2$ = this.http.get(`${this.apiUrl}/2`);
+
+      // forkJoin([
+      //   this.printerService.setTemperatureHotend(this.temperatureHotend),
+      //   this.printerService.setTemperatureHeatbed(this.temperatureHeatbed),
+      //   this.printerService.setFeedrate(this.feedrate),
+      //   this.printerService.setFanSpeed(this.fanSpeed),
+      //   this.hideControlOverlay(event)
+      // ]);
+      await this.printerService.setTemperatureHotend(this.temperatureHotend);
+      await this.printerService.setTemperatureHeatbed(this.temperatureHeatbed);
       this.printerService.setFeedrate(this.feedrate);
       this.printerService.setFanSpeed(this.fanSpeed);
       this.hideControlOverlay(event);

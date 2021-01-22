@@ -113,45 +113,45 @@
     </div>
   </div>
   <div *ngIf="page === 2">
-    <span class="filament-heading">unloading filament</span>
+    <span class="filament-heading">请退出耗材</span>
     <div class="filament__progress-bar-wrapper filament__progress-bar-wrapper-wide">
       <div class="filament__progress-bar" id="filamentUnloadBar"></div>
     </div>
     <span class="filament-move__speed">{{ getFeedSpeed() }} mm/s</span>
     <div class="filament-move__wrapper">
-      <a class="filament-move__cancel" matRipple [matRippleUnbounded]="false" (click)="stopExtruderMovement()">stop</a>
+      <a class="filament-move__cancel" matRipple [matRippleUnbounded]="false" (click)="stopExtruderMovement()">暂停</a>
     </div>
   </div>
   <div *ngIf="page === 3">
-    <span class="filament-heading">load new filament</span>
-    <span class="filament-move__speed">Only put a little filament in, I'll pull in the rest.</span>
+    <span class="filament-heading">请更换新的耗材</span>
+    <span class="filament-move__speed">只需要插入一部分耗材，机器后面会自动加载耗材...</span>
     <div *ngIf="selectedSpool" style="margin-top: 15vh">
       <div class="filament-heating__information-color" [ngStyle]="{ 'background-color': selectedSpool.color }"></div>
       <span class="filament-heating__information-name">{{ selectedSpool.displayName }}</span>
     </div>
     <div *ngIf="!selectedSpool" style="margin-top: 15vh">
-      <span class="filament-heating__information-name">I'll wait for you.</span>
+      <span class="filament-heating__information-name">正在等待你插入新耗材...</span>
     </div>
     <div class="filament-move__wrapper">
       <a class="filament__done" matRipple [matRippleUnbounded]="false" (click)="increasePage()">done</a>
     </div>
   </div>
   <div *ngIf="page === 4">
-    <span class="filament-heading">loading filament</span>
+    <span class="filament-heading">加载耗材</span>
     <div class="filament__progress-bar-wrapper filament__progress-bar-wrapper-wide">
       <div class="filament__progress-bar" style="width: 0" id="filamentLoadBar"></div>
     </div>
     <span class="filament-move__speed">{{ getFeedSpeed() }} mm/s</span>
     <div class="filament-move__wrapper">
-      <a class="filament-move__cancel" matRipple [matRippleUnbounded]="false" click="stopExtruderMovement()">stop</a>
+      <a class="filament-move__cancel" matRipple [matRippleUnbounded]="false" click="stopExtruderMovement()">暂停</a>
     </div>
   </div>
   <div *ngIf="page === 5">
-    <span class="filament-heading">purging filament</span>
+    <span class="filament-heading">清理旧的耗材</span>
     <div class="filament-purge__amount">{{ purgeAmount }}mm</div>
     <div class="filament-move__wrapper">
       <a class="filament-purge__more" matRipple [matRippleUnbounded]="false" (click)="increasePurgeAmount(10)">+10mm</a>
-      <a class="filament-purge__done" matRipple [matRippleUnbounded]="false" (click)="setSpoolSelection()">done</a>
+      <a class="filament-purge__done" matRipple [matRippleUnbounded]="false" (click)="setSpoolSelection()">完成更换</a>
     </div>
   </div>
 </div>

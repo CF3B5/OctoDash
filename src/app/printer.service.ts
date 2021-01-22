@@ -1,16 +1,16 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Observer, Subscription, timer } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { Observable, Observer, Subscription, timer } from "rxjs";
+import { shareReplay } from "rxjs/operators";
 
-import { ConfigService } from './config/config.service';
-import { NotificationService } from './notification/notification.service';
-import { OctoprintConnection } from './octoprint/model/connection';
-import { OctoprintPrinterStatus } from './octoprint/model/printerStatus';
+import { ConfigService } from "./config/config.service";
+import { NotificationService } from "./notification/notification.service";
+import { OctoprintConnection } from "./octoprint/model/connection";
+import { OctoprintPrinterStatus } from "./octoprint/model/printerStatus";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class PrinterService {
   private httpGETRequest: Subscription;
@@ -21,7 +21,7 @@ export class PrinterService {
     private http: HttpClient,
     private configService: ConfigService,
     private notificationService: NotificationService,
-    private router: Router,
+    private router: Router
   ) {
     this.observable = new Observable((observer: Observer<PrinterStatusAPI>): void => {
       timer(500, this.configService.getAPIPollingInterval()).subscribe((): void => {
@@ -29,19 +29,31 @@ export class PrinterService {
           this.httpGETRequest.unsubscribe();
         }
         this.httpGETRequest = this.http
-          .get(this.configService.getURL('printer'), this.configService.getHTTPHeaders())
+          .get(this.configService.getURL("printer"), this.configService.getHTTPHeaders())
           .subscribe(
             (data: OctoprintPrinterStatus): void => {
+              let status = data.state.text.toLowerCase();
+              switch (status) {
+                case "operational":
+                  status = "待机中";
+                  break;
+                case "printing":
+                  status = "打印中";
+                  break;
+                case "paused":
+                  status = "暂停中";
+                  break;
+              }
               const printerStatus: PrinterStatusAPI = {
-                status: data.state.text.toLowerCase(),
+                status: status,
                 nozzle: {
                   current: Math.round(data.temperature.tool0.actual),
-                  set: Math.round(data.temperature.tool0.target),
+                  set: Math.round(data.temperature.tool0.target)
                 },
                 heatbed: {
                   current: data.temperature.bed ? Math.round(data.temperature.bed.actual) : 0,
-                  set: data.temperature.bed ? Math.round(data.temperature.bed.target) : 0,
-                },
+                  set: data.temperature.bed ? Math.round(data.temperature.bed.target) : 0
+                }
               };
               observer.next(printerStatus);
             },
@@ -49,7 +61,7 @@ export class PrinterService {
               if (error.status === 409) {
                 this.isPrinterOffline().then((printerOffline): void => {
                   if (printerOffline) {
-                    this.router.navigate(['/standby']);
+                    this.router.navigate(["/standby"]);
                   } else {
                     this.notificationService.setError("Can't retrieve printer status!", error.message);
                   }
@@ -59,12 +71,12 @@ export class PrinterService {
                   status: `connecting ...`,
                   nozzle: {
                     current: 0,
-                    set: 0,
+                    set: 0
                   },
                   heatbed: {
                     current: 0,
-                    set: 0,
-                  },
+                    set: 0
+                  }
                 };
                 observer.next(printerStatus);
               } else {
@@ -72,17 +84,17 @@ export class PrinterService {
                   status: `error (${error.status})`,
                   nozzle: {
                     current: 0,
-                    set: 0,
+                    set: 0
                   },
                   heatbed: {
                     current: 0,
-                    set: 0,
-                  },
+                    set: 0
+                  }
                 };
                 observer.next(printerStatus);
                 this.notificationService.setError("Can't retrieve printer status!", error.message);
               }
-            },
+            }
           );
       });
     }).pipe(shareReplay(1));
@@ -93,24 +105,29 @@ export class PrinterService {
   }
 
   public stopMotors(): void {
-    this.executeGCode('M410');
+    this.executeGCode("M410");
+  }
+
+  public mainLight(): void {
+    //查询当前状态，执行与当前状态相反的状态
+    this.executeGCode("s");
   }
 
   public jog(x: number, y: number, z: number): void {
     const jogPayload: JogCommand = {
-      command: 'jog',
+      command: "jog",
       x,
       y,
       z,
-      speed: z !== 0 ? this.configService.getZSpeed() * 60 : this.configService.getXYSpeed() * 60,
+      speed: z !== 0 ? this.configService.getZSpeed() * 60 : this.configService.getXYSpeed() * 60
     };
     this.httpPOSTRequest = this.http
-      .post(this.configService.getURL('printer/printhead'), jogPayload, this.configService.getHTTPHeaders())
+      .post(this.configService.getURL("printer/printhead"), jogPayload, this.configService.getHTTPHeaders())
       .subscribe(
         (): void => null,
         (error: HttpErrorResponse): void => {
           this.notificationService.setError("Can't move Printhead!", error.message);
-        },
+        }
       );
   }
 
@@ -137,17 +154,17 @@ export class PrinterService {
 
   private moveExtruder(amount: number, speed: number): void {
     const extrudePayload: ExtrudeCommand = {
-      command: 'extrude',
+      command: "extrude",
       amount,
-      speed: speed * 60,
+      speed: speed * 60
     };
     this.httpPOSTRequest = this.http
-      .post(this.configService.getURL('printer/tool'), extrudePayload, this.configService.getHTTPHeaders())
+      .post(this.configService.getURL("printer/tool"), extrudePayload, this.configService.getHTTPHeaders())
       .subscribe(
         (): void => null,
         (error: HttpErrorResponse): void => {
           this.notificationService.setError("Can't extrude Filament!", error.message);
-        },
+        }
       );
   }
 
@@ -156,48 +173,47 @@ export class PrinterService {
       this.httpPOSTRequest.unsubscribe();
     }
     const gCodePayload: GCodeCommand = {
-      commands: gCode.split('; '),
+      commands: gCode.split("; ")
     };
-    this.httpPOSTRequest = this.http
-      .post(this.configService.getURL('printer/command'), gCodePayload, this.configService.getHTTPHeaders())
+    console.log("executeGCode=", gCode);
+    const promise = this.http
+      .post(this.configService.getURL("printer/command"), gCodePayload, this.configService.getHTTPHeaders())
+      .toPromise()
+      .then(r => {
+        console.log("executeGCode", r);
+      });
+    /*this.httpPOSTRequest = this.http
+      .post(this.configService.getURL("printer/command"), gCodePayload, this.configService.getHTTPHeaders())
       .subscribe(
         (): void => null,
         (error: HttpErrorResponse): void => {
           this.notificationService.setError("Can't send GCode!", error.message);
-        },
-      );
+        }
+      );*/
   }
 
   public setTemperatureHotend(temperature: number): void {
     const temperatureHotendCommand: TemperatureHotendCommand = {
-      command: 'target',
+      command: "target",
       targets: {
-        tool0: temperature,
-      },
+        tool0: temperature
+      }
     };
-    this.httpPOSTRequest = this.http
-      .post(this.configService.getURL('printer/tool'), temperatureHotendCommand, this.configService.getHTTPHeaders())
-      .subscribe(
-        (): void => null,
-        (error: HttpErrorResponse): void => {
-          this.notificationService.setError("Can't set Hotend Temperature!", error.message);
-        },
-      );
+    const promise = this.http
+      .post(this.configService.getURL("printer/tool"), temperatureHotendCommand, this.configService.getHTTPHeaders())
+      .toPromise();
+    console.log("setTemperatureHotend", promise);
   }
 
   public setTemperatureHeatbed(temperature: number): void {
     const temperatureHeatbedCommand: TemperatureHeatbedCommand = {
-      command: 'target',
-      target: temperature,
+      command: "target",
+      target: temperature
     };
-    this.httpPOSTRequest = this.http
-      .post(this.configService.getURL('printer/bed'), temperatureHeatbedCommand, this.configService.getHTTPHeaders())
-      .subscribe(
-        (): void => null,
-        (error: HttpErrorResponse): void => {
-          this.notificationService.setError("Can't set Heatbed Temperature!", error.message);
-        },
-      );
+    const promise = this.http
+      .post(this.configService.getURL("printer/bed"), temperatureHeatbedCommand, this.configService.getHTTPHeaders())
+      .toPromise();
+    console.log("setTemperatureHeatbed", promise);
   }
 
   public setFeedrate(feedrate: number): void {
@@ -205,17 +221,12 @@ export class PrinterService {
       return;
     }
     const feedrateCommand: FeedrateCommand = {
-      command: 'feedrate',
-      factor: feedrate,
+      command: "feedrate",
+      factor: feedrate
     };
-    this.httpPOSTRequest = this.http
-      .post(this.configService.getURL('printer/printhead'), feedrateCommand, this.configService.getHTTPHeaders())
-      .subscribe(
-        (): void => null,
-        (error: HttpErrorResponse): void => {
-          this.notificationService.setError("Can't set Feedrate!", error.message);
-        },
-      );
+    this.http
+      .post(this.configService.getURL("printer/printhead"), feedrateCommand, this.configService.getHTTPHeaders())
+      .toPromise();
   }
 
   public setFlowrate(flowrate: number): void {
@@ -223,33 +234,33 @@ export class PrinterService {
       return;
     }
     const flowrateCommand: FeedrateCommand = {
-      command: 'flowrate',
-      factor: flowrate,
+      command: "flowrate",
+      factor: flowrate
     };
     this.httpPOSTRequest = this.http
-      .post(this.configService.getURL('printer/tool'), flowrateCommand, this.configService.getHTTPHeaders())
+      .post(this.configService.getURL("printer/tool"), flowrateCommand, this.configService.getHTTPHeaders())
       .subscribe(
         (): void => null,
         (error: HttpErrorResponse): void => {
           this.notificationService.setError("Can't set Flowrate!", error.message);
-        },
+        }
       );
   }
 
   public setFanSpeed(percentage: number): void {
-    this.executeGCode('M106 S' + Math.round((percentage / 100) * 255));
+    this.executeGCode("M106 S" + Math.round((percentage / 100) * 255));
   }
 
   public isPrinterOffline(): Promise<boolean> {
     return new Promise((resolve): void => {
-      this.http.get(this.configService.getURL('connection'), this.configService.getHTTPHeaders()).subscribe(
+      this.http.get(this.configService.getURL("connection"), this.configService.getHTTPHeaders()).subscribe(
         (data: OctoprintConnection): void => {
-          resolve(data.current.state === 'Closed' || data.current.state.includes('Error:'));
+          resolve(data.current.state === "Closed" || data.current.state.includes("Error:"));
         },
         (error: HttpErrorResponse): void => {
           this.notificationService.setError("Can't retrieve connection state!", error.message);
           resolve(false);
-        },
+        }
       );
     });
   }
@@ -267,7 +278,7 @@ export interface PrinterValue {
 }
 
 interface JogCommand {
-  command: 'jog';
+  command: "jog";
   x: number;
   y: number;
   z: number;
@@ -275,13 +286,13 @@ interface JogCommand {
 }
 
 interface ExtrudeCommand {
-  command: 'extrude';
+  command: "extrude";
   amount: number;
   speed: number;
 }
 
 interface ExtrudeCommand {
-  command: 'extrude';
+  command: "extrude";
   amount: number;
   speed: number;
 }

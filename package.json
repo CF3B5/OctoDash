@@ -50,7 +50,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "npm-run-all -p ng:serve electron:serve electron:serve:big",
+    "start": "npm-run-all -p ng:serve electron:serve",
     "start:big": "npm-run-all -p ng:serve electron:serve:big",
     "build": "npm run ng:build && electron .",
     "test": "",

@@ -27,10 +27,10 @@
   </div>
   <div *ngIf="view === controlView.CANCEL" (click)="stopPropagation($event)">
     <img src="assets/cancel.svg" class="print-control__center-icon" />
-    <span class="print-control__confirm">cancel print?</span>
+    <span class="print-control__confirm">取消打印？</span>
     <div style="text-align: center">
-      <span class="print-control__cancel__action" (click)="cancelPrint($event)">yes</span>
-      <span class="print-control__cancel__action" (click)="backToControlScreen($event)">no</span>
+      <span class="print-control__cancel__action" (click)="cancelPrint($event)">是</span>
+      <span class="print-control__cancel__action" (click)="backToControlScreen($event)">否</span>
     </div>
   </div>
   <div *ngIf="view === controlView.PAUSE" (click)="stopPropagation($event)">

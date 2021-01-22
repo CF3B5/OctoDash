@@ -1,22 +1,36 @@
-<table class="bottom-bar">
+<table class="bottom-bar" style="display: none;">
   <tr>
     <td class="bottom-bar__printer-name">{{ printer.name }}</td>
-    <td class="bottom-bar__printer-name">
-      <div>
-        <fa-icon icon="fas lightbulb" class="control__custom-action-icon"
-        ></fa-icon>
-      </div>
-      <div>
-        <fa-icon icon="fas lightbulb" class="control__custom-action-icon"
-        ></fa-icon>
+    <td class="bottom-bar__light-control">
+      <div style="display: flex;justify-content: center;align-content: end;">
+        <div matRipple [matRippleUnbounded]="true" (click)="light()">
+          <img src="assets/lamp.svg"
+               class="bottom-bar__light-icon" />
+        </div>
       </div>
     </td>
-    <td class="bottom-bar__enclosure-temperature" *ngIf="enclosureTemperature">
+    <!--<td class="bottom-bar__enclosure-temperature" *ngIf="enclosureTemperature">
       <img src="assets/thermometer.svg" class="bottom-bar__enclosure-temperature-icon" />
       {{ enclosureTemperature.temperature }}{{ enclosureTemperature.unit }}
-    </td>
+    </td>-->
     <td class="bottom-bar__current-status" [ngClass]="{ 'bottom-bar__error': printer.status.includes('error') }">
       {{ printer.status }}
     </td>
   </tr>
 </table>
+<div>
+  <div
+    style="display: flex;justify-content: space-between;align-content: end;margin: 0 2vw;">
+    <div style="padding-top: 5vh;">{{ printer.name }}</div>
+    <div>
+      <div style="display: flex;justify-content: center;">
+        <div matRipple [matRippleUnbounded]="true" (click)="light()">
+          <img src="assets/lamp.svg"
+               class="bottom-bar__light-icon" />
+        </div>
+      </div>
+    </div>
+    <div  style="padding-top: 5vh;" [ngClass]="{ 'bottom-bar__error': printer.status.includes('error') }">{{ printer.status }}</div>
+  </div>
+
+</div>

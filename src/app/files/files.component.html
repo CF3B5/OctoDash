@@ -2,7 +2,7 @@
   <tr>
     <td class="top-bar__back" routerLink="/main-screen" matRipple [matRippleUnbounded]="false">
       <img src="assets/back.svg" class="top-bar__back-icon" />
-      back
+      返回
     </td>
     <td class="top-bar__center">
       <img src="assets/folder.svg" class="top-bar__center-icon" />
@@ -14,7 +14,7 @@
       [matRippleUnbounded]="false"
       *ngIf="folderContent && folderContent.length > 0"
     >
-      sort
+      排序
       <img src="assets/sort.svg" class="top-bar__next-icon" />
     </td>
     <td class="top-bar__next" *ngIf="!folderContent || folderContent.length === 0"></td>
@@ -29,10 +29,10 @@
 </div>
 <div class="files">
   <ngx-spinner>
-    <p class="la-pacman-text">loading</p>
+    <p class="la-pacman-text">加载中</p>
   </ngx-spinner>
 
-  <div *ngIf="!folderContent" class="files__error">can't load files ...</div>
+  <div *ngIf="!folderContent" class="files__error">无法加载文件列表...</div>
 
   <div *ngIf="folderContent && currentFolder !== homeFolder && currentFolder !== ''" class="files__object">
     <div
@@ -130,49 +130,49 @@
 <div class="sorting" id="sortingView" *ngIf="showSorting">
   <div class="sorting-wrapper">
     <img src="assets/error.svg" class="sorting-close" (click)="closeSorting()" />
-    <span class="sorting-heading">sort files</span>
+    <span class="sorting-heading">文件排序</span>
     <table class="sorting-selection">
       <tr>
         <td>
-          <span style="font-size: 2.9vw">sort by</span>
+          <span style="font-size: 2.9vw">排序类型</span>
           <br />
           <div class="sorting__checkbox-container" (click)="sortingAttribute = 'name'">
             <span class="sorting__checkbox">
               <span class="sorting__checkbox-checked" *ngIf="sortingAttribute === 'name'"></span>
             </span>
-            <span class="sorting__checkbox-descriptor">Name</span>
+            <span class="sorting__checkbox-descriptor">文件名</span>
           </div>
           <br />
           <div class="sorting__checkbox-container" (click)="sortingAttribute = 'date'">
             <span class="sorting__checkbox">
               <span class="sorting__checkbox-checked" *ngIf="sortingAttribute === 'date'"></span>
             </span>
-            <span class="sorting__checkbox-descriptor">Date</span>
+            <span class="sorting__checkbox-descriptor">日期</span>
           </div>
           <br />
           <div class="sorting__checkbox-container" (click)="sortingAttribute = 'size'">
             <span class="sorting__checkbox">
               <span class="sorting__checkbox-checked" *ngIf="sortingAttribute === 'size'"></span>
             </span>
-            <span class="sorting__checkbox-descriptor">Size</span>
+            <span class="sorting__checkbox-descriptor">大小</span>
           </div>
           <br />
         </td>
         <td>
-          <span style="font-size: 2.9vw">order</span>
+          <span style="font-size: 2.9vw">顺序</span>
           <br />
           <div class="sorting__checkbox-container" (click)="sortingOrder = 'asc'">
             <span class="sorting__checkbox">
               <span class="sorting__checkbox-checked" *ngIf="sortingOrder === 'asc'"></span>
             </span>
-            <span class="sorting__checkbox-descriptor">Ascending</span>
+            <span class="sorting__checkbox-descriptor">正序</span>
           </div>
           <br />
           <div class="sorting__checkbox-container" (click)="sortingOrder = 'dsc'">
             <span class="sorting__checkbox">
               <span class="sorting__checkbox-checked" *ngIf="sortingOrder === 'dsc'"></span>
             </span>
-            <span class="sorting__checkbox-descriptor">Descending</span>
+            <span class="sorting__checkbox-descriptor">倒序</span>
           </div>
           <br />
         </td>
